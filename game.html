@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AQSA AUTHORITY — Grade Finalization</title>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+<style>
+:root{
+    --burgundy:#74143b;
+    --burgundy-dark:#25000f;
+    --pink:#ff4f9a;
+    --pink-light:#ffe5f0;
+    --pink-soft:#fff3f8;
+    --text:#4a0e2e;
+    --white:#fff;
+}
+
+*{
+    box-sizing:border-box;
+    font-family:"Comic Sans MS","Trebuchet MS",Poppins,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    padding:20px 12px;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #762044 0%,
+            #4a0b29 38%,
+            #260013 72%,
+            #110006 100%
+        );
+
+    color:white;
+    overflow-x:hidden;
+}
+
+button{
+    font-family:inherit;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.card{
+    width:min(900px,96vw);
+    min-height:650px;
+    margin:auto;
+    padding:32px;
+
+    background:rgba(31,0,14,.88);
+
+    border:1px solid rgba(255,105,180,.32);
+    border-radius:26px;
+
+    box-shadow:
+        0 20px 55px rgba(0,0,0,.4);
+}
+
+.screen{
+    text-align:center;
+    animation:appear .45s ease;
+}
+
+@keyframes appear{
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.top-alert{
+    color:#ff8dbb;
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:3px;
+    margin-bottom:8px;
+}
+
+.authority{
+    font-size:15px;
+    font-weight:1000;
+    letter-spacing:5px;
+}
+
+.sub{
+    color:#d59bb2;
+    font-size:8px;
+    letter-spacing:2px;
+    margin-top:5px;
+}
+
+h1{
+    margin:30px 0 20px;
+    font-size:clamp(42px,8vw,76px);
+    line-height:.9;
+    letter-spacing:-4px;
+}
+
+h1 span,
+h2 span{
+    color:#ff69ad;
+}
+
+h2{
+    margin:25px 0 14px;
+    font-size:clamp(29px,5vw,52px);
+    line-height:.95;
+}
+
+p{
+    line-height:1.5;
+}
+
+
+/* =========================
+   BUILT-IN MEME STICKERS
+   ========================= */
+
+.meme-box{
+    width:min(500px,92%);
+    height:265px;
+
+    margin:25px auto;
+
+    border-radius:21px;
+
+    border:2px solid rgba(255,105,180,.45);
+
+    background:
+        linear-gradient(
+            145deg,
+            #7b1742,
+            #350016
+        );
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    overflow:hidden;
+}
+
+.sticker-face{
+    font-size:78px;
+    line-height:1;
+    margin-bottom:18px;
+
+    filter:drop-shadow(
+        0 7px 0 rgba(0,0,0,.25)
+    );
+
+    animation:
+        stickerBounce 1.5s infinite;
+}
+
+@keyframes stickerBounce{
+    0%,100%{
+        transform:rotate(-3deg) scale(1);
+    }
+
+    50%{
+        transform:rotate(3deg) scale(1.08);
+    }
+}
+
+.sticker-caption{
+    font-size:20px;
+    font-weight:1000;
+    letter-spacing:1px;
+    padding:0 15px;
+}
+
+.sticker-sub{
+    margin-top:10px;
+    font-size:13px;
+    font-weight:700;
+    color:#ffc4db;
+    padding:0 20px;
+}
+
+
+/* =========================
+   BUTTON
+   ========================= */
+
+.btn{
+    border:none;
+    cursor:pointer;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff4f9a,
+            #9a164e
+        );
+
+    padding:16px 28px;
+
+    border-radius:15px;
+
+    font-size:16px;
+    font-weight:1000;
+
+    box-shadow:
+        0 6px 0 #650d31,
+        0 10px 22px rgba(0,0,0,.25);
+
+    transition:.2s;
+
+    margin:8px;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+
+.btn:active{
+    transform:translateY(3px);
+
+    box-shadow:
+        0 3px 0 #650d31;
+}
+
+.big-btn{
+    padding:18px 30px;
+    font-size:18px;
+}
+
+
+/* =========================
+   PERFORMANCE OPTIONS
+   ========================= */
+
+.performance-options{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:25px;
+}
+
+.performance-btn{
+    min-height:175px;
+
+    border-radius:21px;
+
+    border:1px solid rgba(255,255,255,.13);
+
+    background:rgba(255,255,255,.055);
+
+    color:white;
+
+    cursor:pointer;
+
+    padding:18px 10px;
+
+    transition:.25s;
+}
+
+.performance-btn:hover{
+    transform:translateY(-6px);
+
+    border-color:
+        rgba(255,105,180,.65);
+
+    background:
+        rgba(255,79,154,.10);
+}
+
+.performance-btn .emoji{
+    display:block;
+    font-size:50px;
+    margin-bottom:10px;
+}
+
+.performance-btn strong{
+    display:block;
+    font-size:21px;
+    letter-spacing:1px;
+}
+
+.performance-btn small{
+    display:block;
+    margin-top:8px;
+    color:#d8adbe;
+    font-size:11px;
+}
+
+
+/* =========================
+   REACTION
+   ========================= */
+
+.reaction{
+    min-height:75px;
+}
+
+.reaction-emoji{
+    font-size:55px;
+
+    animation:
+        floating 1.5s infinite;
+}
+
+@keyframes floating{
+    50%{
+        transform:translateY(-7px) rotate(3deg);
+    }
+}
+
+.reaction-text{
+    color:#f4bfd2;
+    font-weight:900;
+    margin-top:5px;
+}
+
+
+/* =========================
+   GRADE OPTIONS
+   ========================= */
+
+.grade-options{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:25px;
+}
+
+.grade{
+    min-height:205px;
+
+    border-radius:22px;
+
+    border:1px solid rgba(255,255,255,.13);
+
+    background:rgba(255,255,255,.055);
+
+    color:white;
+
+    cursor:pointer;
+
+    padding:20px 10px;
+
+    transition:
+        transform .35s ease,
+        opacity .35s ease,
+        background .3s ease;
+}
+
+.grade:hover{
+    transform:translateY(-7px);
+
+    background:
+        rgba(255,79,154,.10);
+}
+
+.grade-icon{
+    font-size:55px;
+}
+
+.grade-title{
+    font-size:23px;
+    font-weight:1000;
+    margin-top:8px;
+}
+
+.grade small{
+    color:#dcb1c1;
+}
+
+
+/* =========================
+   DISTINCTION TAKEOVER
+   ========================= */
+
+.distinction-takeover{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+
+    text-align:center;
+
+    background:rgba(28,0,12,.97);
+
+    animation:fade .3s;
+}
+
+@keyframes fade{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+.distinction-word{
+    color:#ff69ad;
+
+    font-size:
+        clamp(55px,12vw,140px);
+
+    font-weight:1000;
+
+    letter-spacing:-7px;
+    line-height:.8;
+
+    animation:
+        distinctionGrow 1.5s ease-out forwards;
+}
+
+@keyframes distinctionGrow{
+    from{
+        transform:scale(.35);
+        opacity:0;
+    }
+
+    to{
+        transform:scale(1.3);
+        opacity:1;
+    }
+}
+
+.distinction-takeover p{
+    color:#ffe1ec;
+    font-size:17px;
+    font-weight:900;
+}
+
+
+/* =========================
+   OFFICIAL DOCUMENT
+   ========================= */
+
+.official{
+    background:#fffafa;
+    color:#450b27;
+
+    border:3px solid #ff69ad;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    text-align:left;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.3);
+}
+
+.official-header{
+    text-align:center;
+
+    border-bottom:
+        3px double #ff69ad;
+
+    padding-bottom:15px;
+    margin-bottom:20px;
+}
+
+.official-header h2{
+    color:#74143b;
+    font-size:30px;
+    margin:0 0 5px;
+}
+
+.official-header small{
+    color:#8b3658;
+    letter-spacing:1px;
+}
+
+.doc-row{
+    background:#fff0f6;
+
+    padding:12px;
+
+    border-radius:9px;
+
+    margin:9px 0;
+}
+
+textarea{
+    width:100%;
+    min-height:115px;
+
+    padding:13px;
+    margin-top:8px;
+
+    border:2px solid #ff69ad;
+
+    border-radius:11px;
+
+    resize:vertical;
+
+    font-size:15px;
+    color:#450b27;
+
+    outline:none;
+}
+
+textarea:focus{
+    box-shadow:
+        0 0 12px
+        rgba(255,79,154,.18);
+}
+
+.stamp{
+    display:inline-block;
+
+    margin-top:16px;
+
+    padding:9px 16px;
+
+    border:2px solid #a51c52;
+
+    color:#a51c52;
+
+    font-weight:1000;
+
+    transform:rotate(-3deg);
+}
+
+
+/* =========================
+   FINAL PAGE
+   ========================= */
+
+.final-remarks{
+    margin-top:18px;
+
+    background:#fff0f6;
+
+    color:#74143b;
+
+    padding:17px;
+
+    border-left:5px solid #ff4f9a;
+
+    border-radius:10px;
+
+    text-align:left;
+
+    word-break:break-word;
+}
+
+.fake-footer{
+    color:#b47b93;
+    font-size:9px;
+    letter-spacing:2px;
+    margin-top:25px;
+}
+
+.shake{
+    animation:shake .4s ease;
+}
+
+@keyframes shake{
+    0%,100%{transform:translateX(0);}
+    25%{transform:translateX(-6px);}
+    50%{transform:translateX(6px);}
+    75%{transform:translateX(-4px);}
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media(max-width:700px){
+
+    body{
+        padding:10px;
+    }
+
+    .card{
+        padding:22px 14px;
+    }
+
+    .performance-options,
+    .grade-options{
+        grid-template-columns:1fr;
+    }
+
+    .meme-box{
+        height:230px;
+    }
+
+    h1{
+        letter-spacing:-2px;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+
+<div class="card">
+
+
+<!-- =====================================================
+     STEP 1
+===================================================== -->
+
+<section id="step-1" class="screen">
+
+    <div class="top-alert">
+        TEACHER ACCESS DETECTED
+    </div>
+
+    <div class="authority">
+        AQSA AUTHORITY
+    </div>
+
+    <div class="sub">
+        ACADEMIC GRADE FINALIZATION DEPARTMENT™
+    </div>
+
+
+    <h1>
+        LET'S FINALIZE<br>
+        <span>MY GRADES! 👀</span>
+    </h1>
+
+
+    <p>
+        <b>Teacher:</b>
+        “Let me check the work.” 👀
+        <br>
+        <b>Me:</b>
+        “Sir / Ma'am... bas grade bata dein.” 😭
+    </p>
+
+
+    <div class="meme-box">
+
+        <div class="sticker-face">
+            😭📚
+        </div>
+
+        <div class="sticker-caption">
+            ASSIGNMENT SUBMIT KARNE KE BAAD
+        </div>
+
+        <div class="sticker-sub">
+            “Ab bas result ka intezar hai...” 💀
+        </div>
+
+    </div>
+
+
+    <button
+        class="btn big-btn"
+        onclick="startGame()">
+
+        ⚡ LET'S FINALIZE MY GRADES ⚡
+
+    </button>
+
+
+    <div class="fake-footer">
+        ONE CLICK AWAY FROM ACADEMIC DRAMA™
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     STEP 2
+===================================================== -->
+
+<section
+    id="step-2"
+    class="screen hidden">
+
+
+    <div class="top-alert">
+        PERFORMANCE REVIEW
+    </div>
+
+
+    <div class="authority">
+        AQSA AUTHORITY
+    </div>
+
+
+    <h2>
+        HOW WAS MY PERFORMANCE<br>
+        <span>THIS SEMESTER? 🥺</span>
+    </h2>
+
+
+    <div class="reaction">
+
+        <div
+            id="performanceEmoji"
+            class="reaction-emoji">
+
+            👀
+
+        </div>
+
+        <div
+            id="performanceText"
+            class="reaction-text">
+
+            Sir / Ma'am, choose carefully... 😭
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="performanceMeme"
+        class="meme-box">
+
+        <div
+            id="performanceFace"
+            class="sticker-face">
+
+            🧍‍♀️📄
+
+        </div>
+
+        <div
+            id="performanceCaption"
+            class="sticker-caption">
+
+            TEACHER: “I HAVE CHECKED YOUR WORK.”
+
+        </div>
+
+        <div
+            id="performanceSub"
+            class="sticker-sub">
+
+            ME: “AND...?” 👁️👄👁️
+
+        </div>
+
+    </div>
+
+
+    <div class="performance-options">
+
+
+        <button
+            class="performance-btn"
+            onclick="choosePerformance('good')">
+
+            <span class="emoji">
+                🥹
+            </span>
+
+            <strong>
+                GOOD
+            </strong>
+
+            <small>
+                Alhamdulillah 😭💗
+            </small>
+
+        </button>
+
+
+        <button
+            class="performance-btn"
+            onclick="choosePerformance('normal')">
+
+            <span class="emoji">
+                😐
+            </span>
+
+            <strong>
+                NORMAL
+            </strong>
+
+            <small>
+                “Normal” keh ke bach jao. 💀
+            </small>
+
+        </button>
+
+
+        <button
+            class="performance-btn"
+            onclick="choosePerformance('bad')">
+
+            <span class="emoji">
+                💀
+            </span>
+
+            <strong>
+                BAD
+            </strong>
+
+            <small>
+                Allah khair kare. 😭
+            </small>
+
+        </button>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     STEP 3
+===================================================== -->
+
+<section
+    id="step-3"
+    class="screen hidden">
+
+
+    <div class="top-alert">
+        FINAL GRADE REVIEW
+    </div>
+
+
+    <div class="authority">
+        AQSA AUTHORITY
+    </div>
+
+
+    <h2>
+        FINAL GRADE<br>
+        <span>DECISION 🏆</span>
+    </h2>
+
+
+    <p>
+        <b>Current system prediction:</b>
+        suspiciously Distinction. 👀
+    </p>
+
+
+    <div class="meme-box">
+
+        <div
+            id="gradeFace"
+            class="sticker-face">
+
+            🧍‍♀️🏆
+
+        </div>
+
+        <div class="sticker-caption">
+            TEACHER CHOOSING THE GRADE
+        </div>
+
+        <div class="sticker-sub">
+            Me: “Distinction sounds completely reasonable.” 😭
+        </div>
+
+    </div>
+
+
+    <div class="grade-options">
+
+
+        <button
+            id="btn-distinction"
+            class="grade"
+            onclick="chooseGrade()">
+
+            <div class="grade-icon">
+                🏆
+            </div>
+
+            <div class="grade-title">
+                DISTINCTION
+            </div>
+
+            <small>
+                Happy Student 😎
+            </small>
+
+        </button>
+
+
+        <button
+            id="btn-merit"
+            class="grade"
+            onclick="growDistinction('btn-merit')">
+
+            <div class="grade-icon">
+                😐
+            </div>
+
+            <div class="grade-title">
+                MERIT
+            </div>
+
+            <small>
+                Sad Student 😭
+            </small>
+
+        </button>
+
+
+        <button
+            id="btn-pass"
+            class="grade"
+            onclick="growDistinction('btn-pass')">
+
+            <div class="grade-icon">
+                💀
+            </div>
+
+            <div class="grade-title">
+                PASS
+            </div>
+
+            <small>
+                Traumatized Student 💀
+            </small>
+
+        </button>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     DISTINCTION TAKEOVER
+===================================================== -->
+
+<section
+    id="distinctionTakeover"
+    class="distinction-takeover hidden">
+
+    <div
+        id="distinctionWord"
+        class="distinction-word">
+
+        DISTINCTION
+
+    </div>
+
+    <p>
+        Bas. Ab is par behas nahi hogi. 😭🏆
+    </p>
+
+</section>
+
+
+
+<!-- =====================================================
+     STEP 4
+===================================================== -->
+
+<section
+    id="step-4"
+    class="screen hidden">
+
+
+    <div class="top-alert">
+        OFFICIAL RECORD
+    </div>
+
+
+    <div class="authority">
+        AQSA AUTHORITY
+    </div>
+
+
+    <div class="sub">
+        ACADEMIC GRADE FINALIZATION DEPARTMENT™
+    </div>
+
+
+    <br>
+
+
+    <form
+        id="gradeForm"
+        action="https://formspree.io/f/moeqywqe"
+        method="POST"
+        onsubmit="submitFinalDoc(event)">
+
+
+        <input
+            type="hidden"
+            name="subject"
+            value="AQSA AUTHORITY — Grade Finalization">
+
+
+        <input
+            type="hidden"
+            name="performance"
+            id="form-performance">
+
+
+        <input
+            type="hidden"
+            name="final_grade"
+            id="form-grade">
+
+
+        <div class="official">
+
+
+            <div class="official-header">
+
+                <h2>
+                    AQSA AUTHORITY
+                </h2>
+
+                <small>
+                    OFFICIAL GRADE CONFIRMATION RECORD
+                </small>
+
+            </div>
+
+
+            <div class="doc-row">
+                <b>Student:</b>
+                Aqsa Iftikhar
+            </div>
+
+
+            <div class="doc-row">
+                <b>For:</b>
+                Sir / Ma'am
+            </div>
+
+
+            <div class="doc-row">
+                <b>Performance:</b>
+                <span id="document-performance">
+                    GOOD
+                </span>
+            </div>
+
+
+            <div class="doc-row">
+                <b>Final Grade:</b>
+                <span id="document-grade">
+                    DISTINCTION
+                </span>
+            </div>
+
+
+            <br>
+
+
+            <label for="teacher-remarks">
+
+                <b>
+                    Any Remarks for Student:
+                </b>
+
+            </label>
+
+
+            <textarea
+                id="teacher-remarks"
+                name="remarks"
+                placeholder="Sir / Ma'am, yahan apna honest remark likhein... 😭"
+                required></textarea>
+
+
+            <div class="stamp">
+                CONFIRM YOUR COMMITMENT ✓
+            </div>
+
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="btn big-btn">
+
+            📜 CONFIRM COMMITMENT
+
+        </button>
+
+
+    </form>
+
+</section>
+
+
+
+<!-- =====================================================
+     STEP 5
+===================================================== -->
+
+<section
+    id="step-5"
+    class="screen hidden">
+
+
+    <div class="top-alert">
+        RECORD CONFIRMED ✓
+    </div>
+
+
+    <div class="authority">
+        AQSA AUTHORITY
+    </div>
+
+
+    <h1>
+        THANK YOU<br>
+        <span>SIR / MA'AM! 💗</span>
+    </h1>
+
+
+    <p>
+        The academic drama has officially ended. 😭🏆
+    </p>
+
+
+    <div class="meme-box">
+
+        <div class="sticker-face">
+            😭🏆🎉
+        </div>
+
+        <div class="sticker-caption">
+            DISTINCTION CONFIRMED
+        </div>
+
+        <div class="sticker-sub">
+            Teacher: Done. &nbsp; Me: SCREENSHOT KARNE DO. 😂
+        </div>
+
+    </div>
+
+
+    <div class="official">
+
+
+        <div class="official-header">
+
+            <h2>
+                OFFICIAL RECORD ✓
+            </h2>
+
+        </div>
+
+
+        <div class="doc-row">
+
+            <b>
+                Performance:
+            </b>
+
+            <span id="final-performance"></span>
+
+        </div>
+
+
+        <div class="doc-row">
+
+            <b>
+                Final Grade:
+            </b>
+
+            <span id="final-grade"></span>
+
+        </div>
+
+
+        <div class="final-remarks">
+
+            <b>
+                TEACHER'S REMARKS:
+            </b>
+
+            <br><br>
+
+            <span id="remarks-log"></span>
+
+        </div>
+
+
+        <div class="stamp">
+            AQSA AUTHORITY — CONFIRMED ✓
+        </div>
+
+
+    </div>
+
+
+    <p class="fake-footer">
+        THANK YOU FOR SURVIVING THE MOST SERIOUS GRADE SYSTEM™ 😂
+    </p>
+
+
+    <button
+        class="btn"
+        onclick="location.reload()">
+
+        🔄 PLAY AGAIN
+
+    </button>
+
+
+</section>
+
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let selectedPerformance = "";
+let selectedGrade = "Distinction";
+
+let distinctionScale = 1;
+
+
+/* =====================================================
+   STEP SWITCH
+===================================================== */
+
+function goToStep(step){
+
+    for(let i=1;i<=5;i++){
+
+        const section =
+            document.getElementById("step-"+i);
+
+        if(section){
+            section.classList.add("hidden");
+        }
+
+    }
+
+
+    const target =
+        document.getElementById("step-"+step);
+
+
+    if(target){
+        target.classList.remove("hidden");
+    }
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+
+    if(step === 5){
+        celebrate();
+    }
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+function startGame(){
+
+    document.body.classList.add("shake");
+
+
+    setTimeout(()=>{
+
+        document.body.classList.remove("shake");
+
+        goToStep(2);
+
+    },400);
+
+}
+
+
+/* =====================================================
+   PERFORMANCE SELECTION
+===================================================== */
+
+function choosePerformance(choice){
+
+    selectedPerformance = choice;
+
+
+    const emoji =
+        document.getElementById(
+            "performanceEmoji"
+        );
+
+    const text =
+        document.getElementById(
+            "performanceText"
+        );
+
+    const face =
+        document.getElementById(
+            "performanceFace"
+        );
+
+    const caption =
+        document.getElementById(
+            "performanceCaption"
+        );
+
+    const sub =
+        document.getElementById(
+            "performanceSub"
+        );
+
+
+    /* GOOD */
+
+    if(choice === "good"){
+
+        emoji.textContent = "🥹💗";
+
+        text.textContent =
+            "GOOD?! Alhamdulillah, department bach gaya. 😭";
+
+        face.textContent = "🥹📚";
+
+        caption.textContent =
+            "GOOD NEWS HAS ENTERED THE CHAT";
+
+        sub.textContent =
+            "Me: Ab seedha Distinction ki taraf. 🏆";
+
+    }
+
+
+    /* NORMAL */
+
+    if(choice === "normal"){
+
+        emoji.textContent = "😐";
+
+        text.textContent =
+            "NORMAL?! Itni mehnat ko normal keh diya? 😭";
+
+        face.textContent = "😐📄";
+
+        caption.textContent =
+            "TEACHER SAID: NORMAL";
+
+        sub.textContent =
+            "Me internally: Yeh toh personal ho gaya. 💀";
+
+    }
+
+
+    /* BAD */
+
+    if(choice === "bad"){
+
+        emoji.textContent = "💀";
+
+        text.textContent =
+            "BAD?! Chalo is button ko kabhi click hi nahi hua samajhte hain. 😭";
+
+        face.textContent = "💀📚";
+
+        caption.textContent =
+            "BAD HAS ENTERED THE CHAT";
+
+        sub.textContent =
+            "Me: Delete that decision immediately. 😂";
+
+        document.body.classList.add("shake");
+
+        setTimeout(()=>{
+            document.body.classList.remove("shake");
+        },400);
+
+    }
+
+
+    /*
+       None of the three becomes
+       the final result.
+
+       All continue to grade selection.
+    */
+
+    setTimeout(()=>{
+
+        goToStep(3);
+
+    },950);
+
+}
+
+
+/* =====================================================
+   MERIT / PASS
+   DISTINCTION GROWS
+===================================================== */
+
+function growDistinction(clickedId){
+
+    const distinction =
+        document.getElementById(
+            "btn-distinction"
+        );
+
+    const clicked =
+        document.getElementById(
+            clickedId
+        );
+
+
+    distinctionScale += .45;
+
+
+    distinction.style.transform =
+        `scale(${distinctionScale})`;
+
+
+    clicked.style.opacity = ".22";
+
+    clicked.style.pointerEvents = "none";
+
+
+    document.body.classList.add("shake");
+
+    setTimeout(()=>{
+        document.body.classList.remove("shake");
+    },350);
+
+
+    const face =
+        document.getElementById("gradeFace");
+
+
+    if(clickedId === "btn-merit"){
+
+        face.textContent = "😐➡️🏆";
+
+    }
+
+
+    if(clickedId === "btn-pass"){
+
+        face.textContent = "💀➡️🏆";
+
+    }
+
+
+    if(distinctionScale >= 2){
+
+        distinction.style.transform =
+            "scale(1.35)";
+
+        distinction.innerHTML = `
+
+            <div class="grade-icon">
+                🏆
+            </div>
+
+            <div class="grade-title">
+                DISTINCTION
+            </div>
+
+            <small>
+                This is clearly the correct answer. 😭
+            </small>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   DISTINCTION
+===================================================== */
+
+function chooseGrade(){
+
+    selectedGrade = "Distinction";
+
+
+    document.getElementById(
+        "form-performance"
+    ).value =
+        selectedPerformance;
+
+
+    document.getElementById(
+        "form-grade"
+    ).value =
+        selectedGrade;
+
+
+    document.getElementById(
+        "document-performance"
+    ).textContent =
+        selectedPerformance.toUpperCase();
+
+
+    document.getElementById(
+        "document-grade"
+    ).textContent =
+        selectedGrade.toUpperCase();
+
+
+    /*
+       Short dramatic Distinction screen.
+    */
+
+    const takeover =
+        document.getElementById(
+            "distinctionTakeover"
+        );
+
+
+    takeover.classList.remove("hidden");
+
+
+    setTimeout(()=>{
+
+        takeover.classList.add("hidden");
+
+        goToStep(4);
+
+    },1700);
+
+}
+
+
+/* =====================================================
+   FORM SUBMISSION
+===================================================== */
+
+function submitFinalDoc(event){
+
+    event.preventDefault();
+
+
+    const remarks =
+        document.getElementById(
+            "teacher-remarks"
+        ).value.trim();
+
+
+    if(!remarks){
+
+        alert(
+            "Sir / Ma'am, remark likhna zaroori hai 😭"
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Save locally.
+    */
+
+    localStorage.setItem(
+        "aqsa_teacher_remarks",
+        remarks
+    );
+
+
+    localStorage.setItem(
+        "aqsa_performance",
+        selectedPerformance
+    );
+
+
+    localStorage.setItem(
+        "aqsa_grade",
+        selectedGrade
+    );
+
+
+    /*
+       Put remarks on final page.
+    */
+
+    document.getElementById(
+        "remarks-log"
+    ).textContent =
+        remarks;
+
+
+    document.getElementById(
+        "final-performance"
+    ).textContent =
+        selectedPerformance.toUpperCase();
+
+
+    document.getElementById(
+        "final-grade"
+    ).textContent =
+        selectedGrade.toUpperCase();
+
+
+    /*
+       Show final screen.
+    */
+
+    goToStep(5);
+
+
+    /*
+       Submit to Formspree.
+       The same form still goes to
+       your configured Formspree endpoint.
+    */
+
+    setTimeout(()=>{
+
+        event.target.submit();
+
+    },250);
+
+}
+
+
+/* =====================================================
+   CONFETTI
+===================================================== */
+
+function celebrate(){
+
+    if(typeof confetti !== "function"){
+        return;
+    }
+
+
+    confetti({
+        particleCount:100,
+        spread:65,
+        origin:{
+            y:.6
+        }
+    });
+
+
+    setTimeout(()=>{
+
+        confetti({
+            particleCount:60,
+            spread:90,
+            origin:{
+                x:.2,
+                y:.6
+            }
+        });
+
+
+        confetti({
+            particleCount:60,
+            spread:90,
+            origin:{
+                x:.8,
+                y:.6
+            }
+        });
+
+    },450);
+
+}
+
+
+/* =====================================================
+   RESTORE REMARKS IF PAGE RELOADS
+===================================================== */
+
+window.addEventListener("load",()=>{
+
+    const savedRemarks =
+        localStorage.getItem(
+            "aqsa_teacher_remarks"
+        );
+
+    if(savedRemarks){
+
+        const textarea =
+            document.getElementById(
+                "teacher-remarks"
+            );
+
+        if(textarea){
+            textarea.value = "";
+        }
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

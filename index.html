@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aqsa Authority — Grade Portal</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 15% 15%,rgba(128,0,32,.22),transparent 25%),
+        radial-gradient(circle at 85% 85%,rgba(128,0,32,.18),transparent 25%),
+        #16070c;
+    color:#fff;
+    overflow-x:hidden;
+}
+
+button{
+    font-family:inherit;
+}
+
+.app{
+    width:100%;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px 15px;
+}
+
+.screen{
+    width:min(1100px,100%);
+    min-height:650px;
+    background:rgba(44,10,20,.94);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:30px;
+    box-shadow:0 30px 90px rgba(0,0,0,.55);
+    padding:42px;
+    position:relative;
+    overflow:hidden;
+}
+
+.screen::before{
+    content:"";
+    position:absolute;
+    width:300px;
+    height:300px;
+    background:rgba(128,0,32,.2);
+    border-radius:50%;
+    top:-160px;
+    right:-100px;
+    filter:blur(20px);
+}
+
+.header{
+    text-align:center;
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-block;
+    background:#8b1538;
+    padding:8px 18px;
+    border-radius:30px;
+    font-size:12px;
+    font-weight:bold;
+    letter-spacing:2px;
+    margin-bottom:16px;
+}
+
+h1{
+    font-size:clamp(34px,6vw,64px);
+    line-height:1;
+    margin-bottom:12px;
+}
+
+.subtitle{
+    color:#d8bfc6;
+    font-size:16px;
+}
+
+.page{
+    display:none;
+    animation:pageIn .45s ease;
+    position:relative;
+    z-index:2;
+}
+
+.page.active{
+    display:block;
+}
+
+@keyframes pageIn{
+    from{
+        opacity:0;
+        transform:translateY(18px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.progress{
+    display:flex;
+    justify-content:center;
+    gap:9px;
+    margin:28px 0 35px;
+}
+
+.dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#4a2530;
+    transition:.3s;
+}
+
+.dot.active{
+    width:32px;
+    border-radius:20px;
+    background:#b51e4d;
+}
+
+.question{
+    text-align:center;
+    font-size:clamp(25px,4vw,42px);
+    margin:20px auto 35px;
+    max-width:850px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:1fr 1.3fr 1fr;
+    gap:18px;
+    align-items:center;
+    max-width:950px;
+    margin:auto;
+}
+
+.grade{
+    border:1px solid rgba(255,255,255,.13);
+    background:rgba(255,255,255,.055);
+    border-radius:24px;
+    padding:28px 20px;
+    text-align:center;
+    cursor:pointer;
+    transition:.3s;
+    min-height:270px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.grade:hover{
+    transform:translateY(-8px);
+    background:rgba(255,255,255,.09);
+}
+
+.grade.distinction{
+    min-height:340px;
+    transform:scale(1.04);
+    border:2px solid #d52b62;
+    background:linear-gradient(145deg,#6f092e,#9f1643);
+    box-shadow:0 20px 50px rgba(160,15,65,.35);
+}
+
+.grade.distinction:hover{
+    transform:scale(1.07) translateY(-8px);
+}
+
+.grade .emoji{
+    font-size:60px;
+    margin-bottom:12px;
+}
+
+.grade.distinction .emoji{
+    font-size:82px;
+}
+
+.grade h2{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.grade p{
+    color:#dcc7ce;
+    font-size:14px;
+    line-height:1.5;
+}
+
+.grade.distinction p{
+    color:#fff0f4;
+}
+
+.range{
+    display:inline-block;
+    margin-top:15px;
+    padding:7px 14px;
+    border-radius:20px;
+    background:rgba(0,0,0,.22);
+    font-weight:bold;
+}
+
+.joke{
+    text-align:center;
+    margin:35px auto 0;
+    color:#e8cdd4;
+    font-size:15px;
+    max-width:700px;
+}
+
+.next-area{
+    text-align:center;
+    margin-top:32px;
+}
+
+.btn{
+    border:none;
+    background:#a91746;
+    color:white;
+    padding:14px 28px;
+    border-radius:15px;
+    font-weight:bold;
+    font-size:15px;
+    cursor:pointer;
+    transition:.25s;
+    box-shadow:0 8px 25px rgba(169,23,70,.25);
+}
+
+.btn:hover{
+    background:#c32255;
+    transform:translateY(-2px);
+}
+
+.btn.secondary{
+    background:#32131d;
+    border:1px solid rgba(255,255,255,.12);
+    box-shadow:none;
+}
+
+.btn:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.reaction{
+    text-align:center;
+    padding:35px 15px;
+}
+
+.reaction-face{
+    font-size:115px;
+    margin:15px 0;
+    animation:bounce .8s infinite alternate;
+}
+
+@keyframes bounce{
+    from{transform:translateY(0) rotate(-3deg)}
+    to{transform:translateY(-10px) rotate(3deg)}
+}
+
+.reaction h2{
+    font-size:42px;
+    margin-bottom:12px;
+}
+
+.reaction p{
+    color:#ddc4cb;
+    max-width:650px;
+    margin:auto;
+    line-height:1.7;
+}
+
+.quote-box{
+    max-width:700px;
+    margin:35px auto;
+    background:rgba(0,0,0,.22);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:20px;
+    padding:25px;
+    text-align:center;
+    font-size:20px;
+    line-height:1.5;
+}
+
+textarea,
+input{
+    width:100%;
+    background:#230d14;
+    border:1px solid rgba(255,255,255,.14);
+    color:white;
+    border-radius:15px;
+    padding:16px;
+    outline:none;
+    font-size:15px;
+}
+
+textarea{
+    min-height:150px;
+    resize:vertical;
+}
+
+textarea:focus,
+input:focus{
+    border-color:#b51e4d;
+}
+
+.form-box{
+    max-width:750px;
+    margin:25px auto;
+}
+
+.label{
+    display:block;
+    margin-bottom:9px;
+    font-weight:bold;
+}
+
+.small{
+    font-size:13px;
+    color:#bfaab1;
+    margin-top:8px;
+}
+
+.center{
+    text-align:center;
+}
+
+.remarks-options{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    max-width:800px;
+    margin:25px auto;
+}
+
+.remark{
+    background:#291019;
+    border:1px solid rgba(255,255,255,.1);
+    color:#eee;
+    border-radius:17px;
+    padding:20px;
+    cursor:pointer;
+    text-align:left;
+    transition:.25s;
+}
+
+.remark:hover{
+    border-color:#b51e4d;
+    transform:translateY(-3px);
+}
+
+.remark.selected{
+    border:2px solid #d42a61;
+    background:#571329;
+}
+
+.authority{
+    max-width:780px;
+    margin:20px auto;
+    padding:30px;
+    text-align:center;
+    border-radius:25px;
+    background:linear-gradient(145deg,#70102f,#3b0d1b);
+    border:2px solid #a91b49;
+}
+
+.authority-title{
+    font-size:13px;
+    letter-spacing:4px;
+    color:#f0a8bd;
+    margin-bottom:8px;
+}
+
+.authority h2{
+    font-size:clamp(32px,6vw,58px);
+}
+
+.locked{
+    max-width:800px;
+    margin:auto;
+    text-align:center;
+}
+
+.lock-icon{
+    font-size:80px;
+    margin-bottom:15px;
+}
+
+.final-grade{
+    display:inline-block;
+    margin:25px auto;
+    padding:25px 45px;
+    border-radius:25px;
+    background:linear-gradient(145deg,#a91648,#710b30);
+    box-shadow:0 20px 55px rgba(160,15,65,.35);
+}
+
+.final-grade span{
+    display:block;
+    font-size:14px;
+    color:#f0ccd6;
+    margin-bottom:7px;
+}
+
+.final-grade strong{
+    font-size:48px;
+}
+
+.balloons{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:100;
+}
+
+.balloon{
+    position:absolute;
+    bottom:-100px;
+    font-size:45px;
+    animation:rise linear forwards;
+}
+
+@keyframes rise{
+    to{
+        transform:translateY(-120vh) rotate(20deg);
+        opacity:0;
+    }
+}
+
+.confetti{
+    position:fixed;
+    width:9px;
+    height:14px;
+    top:-20px;
+    z-index:101;
+    pointer-events:none;
+    animation:fall 2.5s linear forwards;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh) rotate(720deg);
+        opacity:0;
+    }
+}
+
+.shake{
+    animation:shake .4s ease;
+}
+
+@keyframes shake{
+    0%,100%{transform:translateX(0)}
+    25%{transform:translateX(-12px)}
+    50%{transform:translateX(12px)}
+    75%{transform:translateX(-7px)}
+}
+
+.hidden{
+    display:none!important;
+}
+
+.footer{
+    text-align:center;
+    margin-top:35px;
+    color:#73535e;
+    font-size:12px;
+}
+
+@media(max-width:800px){
+    .screen{
+        padding:25px 16px;
+        border-radius:20px;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .grade,
+    .grade.distinction{
+        min-height:220px;
+        transform:none;
+    }
+
+    .grade.distinction{
+        order:-1;
+    }
+
+    .grade.distinction:hover{
+        transform:translateY(-5px);
+    }
+
+    .remarks-options{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="balloons" id="balloons"></div>
+
+<div class="app">
+<div class="screen">
+
+<div class="header">
+    <div class="badge">AQSA AUTHORITY • SEMESTER VERDICT</div>
+    <h1>Grade Portal 🎓</h1>
+    <div class="subtitle">Because apparently one semester needs a whole investigation.</div>
+</div>
+
+<div class="progress">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+</div>
+
+
+<!-- PAGE 1 -->
+
+<section class="page active" id="page1">
+
+    <div class="question">
+        How was your performance throughout the semester? 👀
+    </div>
+
+    <div class="cards">
+
+        <div class="grade" onclick="chooseGrade('pass')">
+            <div class="emoji">😵‍💫</div>
+            <h2>Pass</h2>
+            <p>Technically survived. The academic ambulance has arrived.</p>
+            <div class="range">Below Merit</div>
+        </div>
+
+        <div class="grade distinction" onclick="chooseGrade('distinction')">
+            <div class="emoji">🤩</div>
+            <h2>Distinction 🏆</h2>
+            <p>Obviously. The portal itself has accepted the inevitable.</p>
+            <div class="range">70–75</div>
+        </div>
+
+        <div class="grade" onclick="chooseGrade('merit')">
+            <div class="emoji">🥲</div>
+            <h2>Merit</h2>
+            <p>Not bad. But the Distinction button is staring at you.</p>
+            <div class="range">Middle Range</div>
+        </div>
+
+    </div>
+
+    <div class="joke">
+        ⚠️ WARNING: Selecting anything other than Distinction may cause unnecessary emotional damage.
+    </div>
+
+</section>
+
+
+<!-- PAGE 2 -->
+
+<section class="page" id="page2">
+
+    <div class="reaction">
+
+        <div class="question" id="reactionQuestion">
+            System has received your answer.
+        </div>
+
+        <div class="reaction-face" id="reactionFace">🤩</div>
+
+        <h2 id="reactionTitle">EXCELLENT. AS EXPECTED.</h2>
+
+        <p id="reactionText">
+            The AQSA Authority has reviewed the situation and found absolutely no reason to argue with this decision.
+        </p>
+
+        <div class="quote-box" id="reactionQuote">
+            “The academic evidence was apparently too powerful.”
+        </div>
+
+        <button class="btn" onclick="goTo(3)">
+            Continue Investigation →
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- PAGE 3 -->
+
+<section class="page" id="page3">
+
+    <div class="question">
+        Okay... but what are your actual remarks? 🧐
+    </div>
+
+    <div class="remarks-options">
+
+        <div class="remark" onclick="selectRemark(this,'Consistent and hardworking throughout the semester.')">
+            📚 Consistent & hardworking
+        </div>
+
+        <div class="remark" onclick="selectRemark(this,'Creative, responsible and always willing to improve.')">
+            🎨 Creative & responsible
+        </div>
+
+        <div class="remark" onclick="selectRemark(this,'Handled assignments, presentations and deadlines like a professional.')">
+            💻 Assignment survivor
+        </div>
+
+        <div class="remark" onclick="selectRemark(this,'Somehow managed everything and still reached the Distinction zone.')">
+            🏆 Suspiciously successful
+        </div>
+
+    </div>
+
+    <div class="form-box">
+        <label class="label">Or write your own remarks ✍️</label>
+        <textarea id="customRemark" placeholder="Write something about your semester..."></textarea>
+    </div>
+
+    <div class="center">
+        <button class="btn" id="remarkBtn" onclick="goToAuthority()" disabled>
+            Submit Remarks →
+        </button>
+    </div>
+
+</section>
+
+
+<!-- PAGE 4 -->
+
+<section class="page" id="page4">
+
+    <div class="authority">
+
+        <div class="authority-title">OFFICIAL ACADEMIC REVIEW</div>
+
+        <h2>AQSA AUTHORITY</h2>
+
+        <p style="margin-top:15px;color:#e6cbd3;">
+            Final review initiated. Please remain academically calm.
+        </p>
+
+    </div>
+
+    <div class="quote-box">
+        <strong>Final Remarks</strong><br><br>
+        <span id="finalRemark">
+            Academic performance reviewed successfully.
+        </span>
+    </div>
+
+    <div class="center">
+
+        <button class="btn" onclick="lockGrades()">
+            🔒 Lock Grades
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- PAGE 5 -->
+
+<section class="page" id="page5">
+
+    <div class="locked">
+
+        <div class="lock-icon">🔐</div>
+
+        <div class="question">
+            Grades Locked.
+        </div>
+
+        <p style="color:#cdb5bd;">
+            The AQSA Authority has completed its extremely serious investigation.
+        </p>
+
+        <div class="final-grade">
+            <span>FINAL SEMESTER RESULT</span>
+            <strong>DISTINCTION 🏆</strong>
+            <div style="margin-top:10px;font-size:22px;">75 / 100</div>
+        </div>
+
+        <div class="quote-box">
+            <strong>Official Remarks</strong><br><br>
+            <span id="lockedRemark">
+                Performance reviewed. Distinction confirmed.
+            </span>
+        </div>
+
+        <div class="quote-box">
+            🤖 AI ANALYSIS:<br><br>
+            “We checked the semester. We checked the assignments.
+            We checked again. Unfortunately for the Merit button,
+            the evidence is embarrassing.”
+        </div>
+
+        <button class="btn" onclick="sendResult()">
+            📧 Send Result to Gmail
+        </button>
+
+        <div id="emailStatus" class="small"></div>
+
+        <div style="margin-top:20px;">
+            <button class="btn secondary" onclick="location.reload()">
+                Start Again
+            </button>
+        </div>
+
+    </div>
+
+</section>
+
+<div class="footer">
+    AQSA AUTHORITY © 2026 • Academic Investigation Division
+</div>
+
+</div>
+</div>
+
+
+<!-- Hidden Formspree form -->
+<form
+    id="resultForm"
+    action="https://formspree.io/f/moeqywqe"
+    method="POST"
+    style="display:none;"
+>
+
+    <input type="hidden" name="_subject" value="AQSA Authority — Semester Grade Result">
+    <input type="hidden" name="Student" value="Aqsa Iftikhar">
+    <input type="hidden" name="Final Grade" value="Distinction">
+    <input type="hidden" name="Marks" value="75/100">
+    <input type="hidden" name="Performance" id="emailPerformance">
+    <input type="hidden" name="Remarks" id="emailRemarks">
+    <input type="hidden" name="Authority" value="AQSA AUTHORITY">
+    <input type="hidden" name="Message" value="Distinction confirmed by AQSA Authority.">
+
+</form>
+
+
+<script>
+
+let selectedGrade = "distinction";
+let selectedRemark = "";
+
+const pages = document.querySelectorAll(".page");
+const dots = document.querySelectorAll(".dot");
+
+function goTo(number){
+
+    pages.forEach(page => page.classList.remove("active"));
+
+    document
+        .getElementById("page" + number)
+        .classList.add("active");
+
+    dots.forEach((dot,index)=>{
+        dot.classList.toggle("active",index === number-1);
+    });
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+function chooseGrade(grade){
+
+    selectedGrade = grade;
+
+    if(grade === "distinction"){
+
+        createBalloons();
+        createConfetti();
+
+        document.getElementById("reactionFace").textContent = "🤩";
+        document.getElementById("reactionTitle").textContent =
+            "DISTINCTION. OBVIOUSLY. 🏆";
+
+        document.getElementById("reactionText").textContent =
+            "The system briefly considered other grades, then remembered who was using the portal.";
+
+        document.getElementById("reactionQuote").innerHTML =
+            "🎓 “75 marks? The AQSA Authority has decided to stop pretending this was difficult.”";
+
+    }
+
+    else if(grade === "merit"){
+
+        document.getElementById("reactionFace").textContent = "🥲";
+        document.getElementById("reactionTitle").textContent =
+            "MERIT?! EXCUSE ME? 😭";
+
+        document.getElementById("reactionText").textContent =
+            "The system is disappointed, the calculator is disappointed, and somewhere a Distinction button is crying.";
+
+        document.getElementById("reactionQuote").innerHTML =
+            "📉 “You were THIS close to pressing the correct button.”";
+
+    }
+
+    else{
+
+        document.getElementById("reactionFace").textContent = "😵‍💫";
+        document.getElementById("reactionTitle").textContent =
+            "PASS?! THIS PORTAL NEEDS A MINUTE. 💀";
+
+        document.getElementById("reactionText").textContent =
+            "Academic emergency detected. The AQSA Authority recommends immediately reconsidering that decision.";
+
+        document.getElementById("reactionQuote").innerHTML =
+            "🚨 “The semester happened. We are choosing not to discuss it.”";
+
+    }
+
+    goTo(2);
+
+    setTimeout(()=>{
+        if(grade === "distinction"){
+            createBalloons();
+            createConfetti();
+        }
+    },700);
+}
+
+
+function selectRemark(element,text){
+
+    document
+        .querySelectorAll(".remark")
+        .forEach(item=>item.classList.remove("selected"));
+
+    element.classList.add("selected");
+
+    selectedRemark = text;
+
+    document.getElementById("remarkBtn").disabled = false;
+}
+
+
+document
+    .getElementById("customRemark")
+    .addEventListener("input",function(){
+
+        if(this.value.trim().length > 0){
+
+            document
+                .querySelectorAll(".remark")
+                .forEach(item=>item.classList.remove("selected"));
+
+            selectedRemark = this.value.trim();
+
+            document.getElementById("remarkBtn").disabled = false;
+        }
+
+    });
+
+
+function goToAuthority(){
+
+    const custom =
+        document.getElementById("customRemark").value.trim();
+
+    if(custom){
+        selectedRemark = custom;
+    }
+
+    if(!selectedRemark){
+        return;
+    }
+
+    document.getElementById("finalRemark").textContent =
+        selectedRemark;
+
+    goTo(4);
+}
+
+
+function lockGrades(){
+
+    document.getElementById("lockedRemark").textContent =
+        selectedRemark;
+
+    document.getElementById("emailPerformance").value =
+        selectedGrade === "distinction"
+        ? "Distinction-level performance"
+        : selectedGrade;
+
+    document.getElementById("emailRemarks").value =
+        selectedRemark;
+
+    createBalloons();
+    createConfetti();
+
+    goTo(5);
+}
+
+
+function createBalloons(){
+
+    const container =
+        document.getElementById("balloons");
+
+    const emojis = ["🎈","🎈","🎈","🎈","🎈","🎈","🎉","🏆","⭐"];
+
+    for(let i=0;i<18;i++){
+
+        const balloon =
+            document.createElement("div");
+
+        balloon.className = "balloon";
+
+        balloon.textContent =
+            emojis[Math.floor(Math.random()*emojis.length)];
+
+        balloon.style.left =
+            Math.random()*100 + "%";
+
+        balloon.style.animationDuration =
+            (4 + Math.random()*4) + "s";
+
+        balloon.style.animationDelay =
+            Math.random()*1.5 + "s";
+
+        container.appendChild(balloon);
+
+        setTimeout(()=>{
+            balloon.remove();
+        },9000);
+    }
+}
+
+
+function createConfetti(){
+
+    const symbols = ["•","★","✦","◆"];
+
+    for(let i=0;i<90;i++){
+
+        const piece =
+            document.createElement("div");
+
+        piece.className = "confetti";
+
+        piece.textContent =
+            symbols[Math.floor(Math.random()*symbols.length)];
+
+        piece.style.left =
+            Math.random()*100 + "vw";
+
+        piece.style.fontSize =
+            (8 + Math.random()*12) + "px";
+
+        piece.style.animationDuration =
+            (1.8 + Math.random()*2) + "s";
+
+        piece.style.animationDelay =
+            Math.random()*1 + "s";
+
+        document.body.appendChild(piece);
+
+        setTimeout(()=>{
+            piece.remove();
+        },4500);
+    }
+}
+
+
+async function sendResult(){
+
+    const status =
+        document.getElementById("emailStatus");
+
+    status.textContent =
+        "Sending result to the configured Formspree email...";
+
+    const form =
+        document.getElementById("resultForm");
+
+    const data =
+        new FormData(form);
+
+    try{
+
+        const response =
+            await fetch(form.action,{
+                method:"POST",
+                body:data,
+                headers:{
+                    "Accept":"application/json"
+                }
+            });
+
+        if(response.ok){
+
+            status.textContent =
+                "✅ Result sent successfully. AQSA Authority has officially snitched on your semester.";
+
+        }else{
+
+            status.textContent =
+                "⚠️ Formspree could not process the request. Check your Formspree email/activation settings.";
+
+        }
+
+    }catch(error){
+
+        status.textContent =
+            "⚠️ Internet connection or Formspree issue. Please try again.";
+
+    }
+
+}
+
+
+/* Local Storage */
+
+function saveProgress(){
+
+    localStorage.setItem(
+        "aqsaGradePortal",
+        JSON.stringify({
+            grade:selectedGrade,
+            remark:selectedRemark
+        })
+    );
+
+}
+
+window.addEventListener("beforeunload",saveProgress);
+
+</script>
+
+</body>
+</html>
